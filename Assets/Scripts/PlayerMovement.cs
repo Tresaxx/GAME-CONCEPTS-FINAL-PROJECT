@@ -5,17 +5,39 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private float horizontal;
-    private float speed = 8f;
-    private float jumpingPower = 16f;
+    private float speed = 1f;
+    private float jumpingPower = 4f;
     private bool isFacingRight = true;
+    private Animator animate;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
 
+    void Start(){
+        animate = GetComponent<Animator>();
+    }
+
     void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
+        if(animate != null){
+            if(rb.velocity.x == 0 && rb.velocity.y == 0 && IsGrounded()){
+                animate.SetTrigger("Idle");
+            }
+            if(rb.velocity.y < 0 && !(IsGrounded())){
+                animate.SetTrigger("JumpDown");
+            }
+            if(IsGrounded()){
+                    animate.SetTrigger("Land");
+                }
+            if(Input.GetButtonDown("Jump") && IsGrounded()){
+                animate.SetTrigger("JumpUp");
+            }
+            if(rb.velocity.x != 0 && rb.velocity.y == 0 && IsGrounded()){
+                animate.SetTrigger("Run");
+            }
+        }
 
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
@@ -33,6 +55,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+
     }
 
     private bool IsGrounded()
