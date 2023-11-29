@@ -317,7 +317,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 10.76, y: 1}
+  m_Size: {x: 25.69, y: 1}
   m_EdgeRadius: 0
 --- !u!1 &1663454622
 GameObject:
@@ -596,8 +596,8 @@ Transform:
   m_GameObject: {fileID: 1685355225}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.1673, y: -0.1697, z: 0}
-  m_LocalScale: {x: 5.937624, y: 6.2604213, z: 1}
+  m_LocalPosition: {x: 0.2, y: -0.17, z: 0}
+  m_LocalScale: {x: 2.2437587, y: 1.9551935, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1974439133}
@@ -690,7 +690,7 @@ Transform:
   m_GameObject: {fileID: 1974307712}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.38060445, y: 0.2793042, z: -2}
+  m_LocalPosition: {x: -0.30870837, y: 0.2793042, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -740,7 +740,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1974439133}
   - component: {fileID: 1974439132}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Neuralink_logo.svg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -808,8 +808,8 @@ Transform:
   m_GameObject: {fileID: 1974439131}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.65300536, y: -0.016021287, z: 0}
-  m_LocalScale: {x: 0.25825146, y: 0.10706947, z: 1}
+  m_LocalPosition: {x: -0.65301, y: -0.016021, z: 0}
+  m_LocalScale: {x: 0.9183421, y: 0.32254678, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1685355227}
@@ -879,7 +879,7 @@ Transform:
   m_GameObject: {fileID: 2011811530}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.38060445, y: 0.2793042, z: -2}
+  m_LocalPosition: {x: -0.30870837, y: 0.2793042, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
