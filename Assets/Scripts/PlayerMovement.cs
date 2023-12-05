@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isFacingRight = true;
     private Animator animate;
     private bool roll = false;
+    public GameManager GameManager;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -56,6 +57,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         Flip();
+
     }
 
     private void FixedUpdate()
