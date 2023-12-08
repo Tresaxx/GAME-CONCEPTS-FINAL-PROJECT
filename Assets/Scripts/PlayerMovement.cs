@@ -26,23 +26,20 @@ public class PlayerMovement : MonoBehaviour
         roll = Input.GetKeyDown(KeyCode.R);
         horizontal = Input.GetAxisRaw("Horizontal");
         if(animate != null){
-            //if(rb.velocity.x == 0 && rb.velocity.y == 0 && IsGrounded()){
-                //animate.SetTrigger("Idle");
-            //}
+            if(roll){
+                animate.SetTrigger("Roll");
+            }
             if(rb.velocity.y < 0 && !(IsGrounded())){
                 animate.SetTrigger("JumpDown");
             }
             if(IsGrounded()){
-                    animate.SetTrigger("Land");
+                animate.SetTrigger("Land");
                 }
             if(Input.GetButtonDown("Jump") && IsGrounded()){
                 animate.SetTrigger("JumpUp");
             }
             if(rb.velocity.x != 0 && rb.velocity.y == 0 && IsGrounded()){
                 animate.SetTrigger("Run");
-            }
-            if(roll){
-                animate.SetTrigger("Roll");
             }
         }
 
@@ -51,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
         }
 
-        if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
+        else if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         }
@@ -67,8 +64,6 @@ public class PlayerMovement : MonoBehaviour
         if (roll)
         {
             rb.velocity = new Vector2(speed * transform.localScale.x * 10, rb.velocity.y);
-
-            animate.SetTrigger("Roll");
         }
 
     }

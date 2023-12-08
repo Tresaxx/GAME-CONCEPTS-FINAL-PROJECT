@@ -24,5 +24,6 @@ public class PauseScene : MonoBehaviour
     // Update is called once per frame
     public void ExitButton() {
         SceneManager.LoadScene("MainMenu");
+        Time.timeScale = 1;
     }
 }
