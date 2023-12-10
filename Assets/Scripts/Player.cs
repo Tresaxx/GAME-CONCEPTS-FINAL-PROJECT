@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private float horizontal;
-    private float speed = 1f;
-    private float jumpingPower = 4f;
-    private bool isFacingRight = true;
+    public float horizontal;
+    public float speed = 1f;
+    public float jumpingPower = 4f;
+    public bool isFacingRight = true;
+    public bool roll = false;
     private Animator animate;
-    private bool roll = false;
     public GameManager GameManager;
 
-    [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private Transform groundCheck;
-    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] public Rigidbody2D rb;
+    [SerializeField] public Transform groundCheck;
+    [SerializeField] public LayerMask groundLayer;
 
     void Start(){
         animate = GetComponent<Animator>();
@@ -29,17 +29,17 @@ public class Player : MonoBehaviour
             if(roll){
                 animate.SetTrigger("Roll");
             }
-            if(rb.velocity.y < 0 && !(IsGrounded())){
-                animate.SetTrigger("JumpDown");
+            else if(horizontal != 0 && rb.velocity.y == 0 && IsGrounded()){
+                animate.SetTrigger("Run");
             }
             if(IsGrounded()){
                 animate.SetTrigger("Land");
                 }
-            if(Input.GetButtonDown("Jump") && IsGrounded()){
+            else if(Input.GetButtonDown("Jump") && IsGrounded()){
                 animate.SetTrigger("JumpUp");
             }
-            if(rb.velocity.x != 0 && rb.velocity.y == 0 && IsGrounded()){
-                animate.SetTrigger("Run");
+            else if(rb.velocity.y < 0 && !(IsGrounded())){
+                animate.SetTrigger("JumpDown");
             }
         }
 
@@ -55,6 +55,12 @@ public class Player : MonoBehaviour
 
         Flip();
 
+        if(rb.position.y <= -2){
+            GameManager.GameOver();
+            Physics2D.autoSimulation = false;
+        } else {
+            Physics2D.autoSimulation = true;
+        }
     }
 
     private void FixedUpdate()
@@ -75,7 +81,7 @@ public class Player : MonoBehaviour
 
     private void Flip()
     {
-        if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
+        if (isFacingRight && horizontal < 0f && Time.timeScale != 0 || !isFacingRight && horizontal > 0f && Time.timeScale != 0)
         {
             isFacingRight = !isFacingRight;
             Vector3 localScale = transform.localScale;

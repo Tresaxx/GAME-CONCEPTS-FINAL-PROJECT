@@ -21,19 +21,11 @@ public class Ground : MonoBehaviour
         screenRight = Camera.main.transform.position.x * 2;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void FixedUpdate(){
+        Debug.Log("Screen " + screenRight);
+        Debug.Log("Ground " + groundRight);
+
+        Vector2 pos = transform.position;
 
         
         groundRight = transform.position.x + (collider.size.x / 2);
@@ -55,7 +47,7 @@ public class Ground : MonoBehaviour
         GameObject go = Instantiate(gameObject);
         BoxCollider2D goCollider = go.GetComponent<BoxCollider2D>();
         Vector2 pos;
-        pos.x = screenRight + 30;
+        pos.x = screenRight + 1;
         pos.y = transform.position.y;
         go.transform.position = pos;
     }

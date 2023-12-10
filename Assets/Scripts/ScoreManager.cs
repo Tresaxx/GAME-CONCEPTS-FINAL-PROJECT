@@ -10,8 +10,8 @@ public class ScoreManager : MonoBehaviour
     public Text scoreText;
     public Text highscoreText;
 
-    int score = 0;
-    int highscore = 0;
+    public int score = 0;
+    public int highscore = 0;
 
     private void Awake(){
         instance = this;

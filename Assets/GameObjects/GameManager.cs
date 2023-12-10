@@ -7,7 +7,13 @@ public class GameManager : MonoBehaviour
 
     public GameOverScreen GameOverScreen;
     public PauseScene PauseScene;
+    public PowerUp powerUp;
+    public Player player;
     public int score;
+
+    public void Awake(){
+        Time.timeScale = 1;
+    }
 
     public void GameOver(){
         GameOverScreen.Setup(score);
@@ -16,8 +22,17 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        PauseScene.Pause();
-        ScoreManager.instance.AddPoint();
+        if(!GameOverScreen.gameOver){
+            PauseScene.Pause();
+            if(!PauseScene.paused){
+                ScoreManager.instance.AddPoint();
+            }
+            score = ScoreManager.instance.score;
+        }
+    }
+
+    public void PowerUp(){
+        player.speed *= 2;
     }
 
 }
