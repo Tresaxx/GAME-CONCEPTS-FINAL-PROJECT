@@ -17,7 +17,7 @@ public class PowerUp : MonoBehaviour
     private void spawnPowerUp(){
         if(currentPowerUp <= maxPowerUp){
             GameObject p = Instantiate(powerUp);
-            p.transform.position = new Vector2(player.transform.position.x + 2, Random.Range(player.transform.position.y, player.transform.position.y + 4));
+            p.transform.position = new Vector2(player.transform.position.x + 2, Random.Range(player.transform.position.y, player.transform.position.y + 2));
             currentPowerUp++;
         }
     }
@@ -27,5 +27,9 @@ public class PowerUp : MonoBehaviour
             yield return new WaitForSeconds(respawnTime);
             spawnPowerUp();
         }
+    }
+
+    public void DestroyGameObject(){
+        Destroy(gameObject);
     }
 }

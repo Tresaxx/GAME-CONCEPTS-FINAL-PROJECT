@@ -9,6 +9,10 @@ public class Player : MonoBehaviour
     public float jumpingPower = 4f;
     public bool isFacingRight = true;
     public bool roll = false;
+    public bool powerUp = false;
+    public bool activePowerUp = false;
+    public float powerTime = 8f;
+    public float multiplier;
     private Animator animate;
     public GameManager GameManager;
 
@@ -55,7 +59,7 @@ public class Player : MonoBehaviour
 
         Flip();
 
-        if(rb.position.y <= -2){
+        if(rb.position.y <= -4){
             GameManager.GameOver();
             Physics2D.autoSimulation = false;
         } else {
@@ -69,7 +73,7 @@ public class Player : MonoBehaviour
 
         if (roll)
         {
-            rb.velocity = new Vector2(speed * transform.localScale.x * 10, rb.velocity.y);
+            rb.velocity = new Vector2(speed * transform.localScale.x + 10, rb.velocity.y);
         }
 
     }
@@ -87,6 +91,36 @@ public class Player : MonoBehaviour
             Vector3 localScale = transform.localScale;
             localScale.x *= -1f;
             transform.localScale = localScale;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision){
+        if(collision.gameObject.tag == "PowerUp" && activePowerUp == false){
+            powerUp = true;
+        } else if(collision.gameObject.tag == "PowerUp" && activePowerUp == true){
+            powerTime += 8f;
+            Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.tag == "PowerUp" && powerUp == true){
+            Destroy(collision.gameObject);
+            StartCoroutine(PowerUp());
+        }
+    }
+
+        IEnumerator PowerUp(){
+        while(powerUp){
+            speed = speed * multiplier;
+            Debug.Log(speed);
+            powerUp = false;
+            activePowerUp = true;
+            for(int i = 0; i < powerTime; i++){
+                yield return new WaitForSeconds(1);
+            }
+            if(activePowerUp == true && powerTime > 8){
+                powerTime -= 8f;
+            }
+            activePowerUp = false;
+            speed = speed / multiplier;
         }
     }
 }
