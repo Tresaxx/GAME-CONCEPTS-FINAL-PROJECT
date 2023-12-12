@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
         if(!GameOverScreen.gameOver){
             PauseScene.Pause();
             if(!PauseScene.paused){
-                ScoreManager.instance.AddPoint();
+                ScoreManager.instance.AddPoint(1);
             }
             score = ScoreManager.instance.score;
         }

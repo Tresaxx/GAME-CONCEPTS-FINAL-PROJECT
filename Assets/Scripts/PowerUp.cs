@@ -6,30 +6,42 @@ public class PowerUp : MonoBehaviour
 {
     public GameObject powerUp;
     public GameObject player;
-    public float respawnTime = 20.0f;
-    public float currentPowerUp = 1;
-    public float maxPowerUp = 2;
+    private GameObject p;
+    public bool despawn = false;
+    private float timer = 0.0f;
+    private float despawnTimer = 0.0f;
+    public float respawnTime = 10.0f;
+    public float despawnTime = 5.0f;
     // Start is called before the first frame update
-    void Start()
+    void Update()
     {
-        StartCoroutine(powerUpLoop());
-    }
-    private void spawnPowerUp(){
-        if(currentPowerUp <= maxPowerUp){
-            GameObject p = Instantiate(powerUp);
-            p.transform.position = new Vector2(player.transform.position.x + 2, Random.Range(player.transform.position.y, player.transform.position.y + 2));
-            currentPowerUp++;
-        }
-    }
+        timer += Time.deltaTime;
 
-    IEnumerator powerUpLoop(){
-        while(true){
-            yield return new WaitForSeconds(respawnTime);
+        if(timer > respawnTime && gameObject.tag != "PowerUp"){
             spawnPowerUp();
+            timer = timer - respawnTime;
+            despawn = true;
+        } 
+        if(despawn = true){
+            despawnTimer += Time.deltaTime;
+        }
+        if(despawnTimer > despawnTime && gameObject.tag == "PowerUp"){
+            Destroy(gameObject);
+            despawn = true;
+            despawnTimer -= despawnTime;
+        } else if(despawnTimer > despawnTime){
+            spawnPowerUp();
+            despawnTimer -= despawnTime;
         }
     }
 
-    public void DestroyGameObject(){
-        Destroy(gameObject);
+    private void spawnPowerUp(){
+        if(player.transform.position.y < 1.0f){
+            p = Instantiate(powerUp);
+            p.transform.position = new Vector2(player.transform.position.x + 3, Random.Range(player.transform.position.y + 0.5f, 1.5f));
+        }else{
+            p = Instantiate(powerUp);
+            p.transform.position = new Vector2(player.transform.position.x + 5, Random.Range(player.transform.position.y - 0.5f, 1.5f));
+        }
     }
 }

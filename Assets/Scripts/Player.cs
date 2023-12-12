@@ -12,7 +12,11 @@ public class Player : MonoBehaviour
     public bool powerUp = false;
     public bool activePowerUp = false;
     public float powerTime = 8f;
-    public float multiplier;
+    public float originalpowerTime = 8f;
+    public float multiplier = 2f;
+    private float currentMul;
+    private float timer = 0.0f;
+    private float powerUpsGot = 0.0f;
     private Animator animate;
     public GameManager GameManager;
 
@@ -26,7 +30,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-
+        
         roll = Input.GetKeyDown(KeyCode.R);
         horizontal = Input.GetAxisRaw("Horizontal");
         if(animate != null){
@@ -49,12 +53,12 @@ public class Player : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+            rb.velocity = new Vector2(rb.velocity.x, jumpingPower + speed/2);
         }
 
         else if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
         {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f + speed/2);
         }
 
         Flip();
@@ -65,6 +69,27 @@ public class Player : MonoBehaviour
         } else {
             Physics2D.autoSimulation = true;
         }
+        //if(ScoreManager.instance.score < 100000){
+            multiplier = 2 + (powerUpsGot * 0.01f * ScoreManager.instance.score/100000);
+        //}   else {
+            //multiplier = 3.0f;
+        //}
+        Debug.Log(speed);
+
+        if(powerUp == true){
+            timer += Time.deltaTime;
+            ScoreManager.instance.PowerUpTime(powerTime - timer);
+            if(timer > powerTime){
+                if(powerTime > 8.0f){
+                    speed -= multiplier - 2;
+                }
+                timer -= powerTime;
+                powerTime = originalpowerTime;
+                speed = speed/currentMul;
+                activePowerUp = false;
+                powerUp = false;
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -73,7 +98,7 @@ public class Player : MonoBehaviour
 
         if (roll)
         {
-            rb.velocity = new Vector2(speed * transform.localScale.x + 10, rb.velocity.y);
+            rb.velocity = new Vector2(speed * (transform.localScale.x * 10), rb.velocity.y);
         }
 
     }
@@ -98,29 +123,19 @@ public class Player : MonoBehaviour
         if(collision.gameObject.tag == "PowerUp" && activePowerUp == false){
             powerUp = true;
         } else if(collision.gameObject.tag == "PowerUp" && activePowerUp == true){
-            powerTime += 8f;
+            ScoreManager.instance.AddPoint(5000);
+            powerTime += originalpowerTime;
             Destroy(collision.gameObject);
+            powerUpsGot++;
+            speed += multiplier - 2;
         }
-        if (collision.gameObject.tag == "PowerUp" && powerUp == true){
-            Destroy(collision.gameObject);
-            StartCoroutine(PowerUp());
-        }
-    }
-
-        IEnumerator PowerUp(){
-        while(powerUp){
-            speed = speed * multiplier;
-            Debug.Log(speed);
-            powerUp = false;
+        if (collision.gameObject.tag == "PowerUp" && powerUp == true && activePowerUp == false){
             activePowerUp = true;
-            for(int i = 0; i < powerTime; i++){
-                yield return new WaitForSeconds(1);
-            }
-            if(activePowerUp == true && powerTime > 8){
-                powerTime -= 8f;
-            }
-            activePowerUp = false;
-            speed = speed / multiplier;
+            ScoreManager.instance.AddPoint(5000);
+            Destroy(collision.gameObject);
+            currentMul = multiplier;
+            speed = speed * currentMul;
+            powerUpsGot++;
         }
     }
 }
