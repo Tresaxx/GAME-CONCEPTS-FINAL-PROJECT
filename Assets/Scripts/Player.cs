@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     public float multiplier = 2f;
     private float currentMul;
     private float timer = 0.0f;
-    private float powerUpsGot = 0.0f;
+    public float powerUpsGot = 0.0f;
     private Animator animate;
     public GameManager GameManager;
 

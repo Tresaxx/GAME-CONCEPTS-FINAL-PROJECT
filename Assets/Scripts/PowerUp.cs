@@ -36,7 +36,7 @@ public class PowerUp : MonoBehaviour
     }
 
     private void spawnPowerUp(){
-        if(player.transform.position.y < 1.0f){
+        if(player.transform.position.y < 0.0f){
             p = Instantiate(powerUp);
             p.transform.position = new Vector2(player.transform.position.x + 3, Random.Range(player.transform.position.y + 0.5f, 1.5f));
         }else{
