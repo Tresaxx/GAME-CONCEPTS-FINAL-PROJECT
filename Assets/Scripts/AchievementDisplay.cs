@@ -11,9 +11,11 @@ public class AchievementDisplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(AchievementManager.achievements[achievementNum].achieved == true){
-            lockImage.SetActive(false);
-            lockIcon.SetActive(false);
+        if(AchievementManager.achievements != null){
+            if(AchievementManager.achievements[achievementNum].achieved == true){
+                lockImage.SetActive(false);
+                lockIcon.SetActive(false);
+            }
         }
     }
 }

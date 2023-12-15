@@ -17,6 +17,9 @@ public class Player : MonoBehaviour
     private float currentMul;
     private float timer = 0.0f;
     public float powerUpsGot = 0.0f;
+    public bool puzzleActive = false;
+    public float puzzleTimer = 0.0f;
+    public float puzzleTime;
     private Animator animate;
     public GameManager GameManager;
 
@@ -26,68 +29,76 @@ public class Player : MonoBehaviour
 
     void Start(){
         animate = GetComponent<Animator>();
+        Physics2D.autoSimulation = true;
     }
 
     void Update()
     {
-        
-        roll = Input.GetKeyDown(KeyCode.R);
-        horizontal = Input.GetAxisRaw("Horizontal");
-        if(animate != null){
-            if(roll){
-                animate.SetTrigger("Roll");
-            }
-            else if(horizontal != 0 && rb.velocity.y == 0 && IsGrounded()){
-                animate.SetTrigger("Run");
-            }
-            if(IsGrounded()){
-                animate.SetTrigger("Land");
+        if(puzzleActive == false){
+            roll = Input.GetKeyDown(KeyCode.R);
+            horizontal = Input.GetAxisRaw("Horizontal");
+            if(animate != null){
+                if(roll){
+                    animate.SetTrigger("Roll");
                 }
-            else if(Input.GetButtonDown("Jump") && IsGrounded()){
-                animate.SetTrigger("JumpUp");
+                else if(horizontal != 0 && rb.velocity.y == 0 && IsGrounded()){
+                    animate.SetTrigger("Run");
+                }
+                if(IsGrounded()){
+                    animate.SetTrigger("Land");
+                    }
+                else if(Input.GetButtonDown("Jump") && IsGrounded()){
+                    animate.SetTrigger("JumpUp");
+                }
+                else if(rb.velocity.y < 0 && !(IsGrounded())){
+                    animate.SetTrigger("JumpDown");
+                }
             }
-            else if(rb.velocity.y < 0 && !(IsGrounded())){
-                animate.SetTrigger("JumpDown");
+
+            if (Input.GetButtonDown("Jump") && IsGrounded())
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpingPower + speed/2);
             }
-        }
 
-        if (Input.GetButtonDown("Jump") && IsGrounded())
-        {
-            rb.velocity = new Vector2(rb.velocity.x, jumpingPower + speed/2);
-        }
+            else if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f + speed/2);
+            }
 
-        else if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f + speed/2);
-        }
+            Flip();
 
-        Flip();
+            if(rb.position.y <= -4){
+                GameManager.GameOver();
+                Physics2D.autoSimulation = false;
+            } else {
+                Physics2D.autoSimulation = true;
+            }
+            //if(ScoreManager.instance.score < 100000){
+                multiplier = 2 + (powerUpsGot * 0.001f * ScoreManager.instance.score/100000);
+            //}   else {
+                //multiplier = 3.0f;
+            //}
+            Debug.Log(speed);
 
-        if(rb.position.y <= -4){
-            GameManager.GameOver();
-            Physics2D.autoSimulation = false;
+            if(powerUp == true){
+                timer += Time.deltaTime;
+                ScoreManager.instance.PowerUpTime(powerTime - timer);
+                if(timer > powerTime){
+                    if(powerTime > 8.0f){
+                        speed -= multiplier - 2;
+                    }
+                    timer -= powerTime;
+                    powerTime = originalpowerTime;
+                    speed = speed/currentMul;
+                    activePowerUp = false;
+                    powerUp = false;
+                }
+            }
         } else {
-            Physics2D.autoSimulation = true;
-        }
-        //if(ScoreManager.instance.score < 100000){
-            multiplier = 2 + (powerUpsGot * 0.01f * ScoreManager.instance.score/100000);
-        //}   else {
-            //multiplier = 3.0f;
-        //}
-        Debug.Log(speed);
-
-        if(powerUp == true){
-            timer += Time.deltaTime;
-            ScoreManager.instance.PowerUpTime(powerTime - timer);
-            if(timer > powerTime){
-                if(powerTime > 8.0f){
-                    speed -= multiplier - 2;
-                }
-                timer -= powerTime;
-                powerTime = originalpowerTime;
-                speed = speed/currentMul;
-                activePowerUp = false;
-                powerUp = false;
+            puzzleTimer += Time.deltaTime;
+            if(puzzleTimer > puzzleTime){
+                puzzleActive = false;
+                puzzleTimer -= puzzleTime;
             }
         }
     }
@@ -136,6 +147,11 @@ public class Player : MonoBehaviour
             currentMul = multiplier;
             speed = speed * currentMul;
             powerUpsGot++;
+        }
+        if(collision.gameObject.tag == "Puzzle"){
+            Destroy(collision.gameObject);
+            Physics2D.autoSimulation = false;
+            puzzleActive = true;
         }
     }
 }

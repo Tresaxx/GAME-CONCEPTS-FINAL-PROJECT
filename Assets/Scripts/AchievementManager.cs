@@ -8,6 +8,7 @@ public class AchievementManager : MonoBehaviour
     public static List<Achievement> achievements;
 
     public Player player;
+    public PuzzleManager puzzle;
 
     public bool AchievementUnlocked(string achievementName)
     {
@@ -40,7 +41,7 @@ public class AchievementManager : MonoBehaviour
         achievements = new List<Achievement>();
         achievements.Add(new Achievement("So Much Power", "Get 10 power ups.", (object o) => player.powerUpsGot >= 10));
         achievements.Add(new Achievement("All The Power", "Get 25 power ups.", (object o) => player.powerUpsGot >= 25));
-        achievements.Add(new Achievement("TOO MUCH POWER", "Get 100 power ups.", (object o) => player.powerUpsGot >= 100));
+        achievements.Add(new Achievement("Puzzles!", "Complete a puzzle.", (object o) => puzzle.puzzlesCompleted >= 5));
         achievements.Add(new Achievement("Speedy Time", "Stay in powerup time for 30 seconds.", (object o) => player.powerTime >= 30));
         achievements.Add(new Achievement("So Fast", "Stay in powerup time for 60 seconds.", (object o) => player.powerTime >= 60));
         achievements.Add(new Achievement("THE FLASH", "Stay in powerup time for 180 seconds.", (object o) => player.powerTime >= 180));

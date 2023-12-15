@@ -66,7 +66,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.29}
@@ -173,6 +173,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d8a6782ff805184689c7aa426bf5a11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  horizontal: 0
+  speed: 1
+  jumpingPower: 4
+  isFacingRight: 1
+  roll: 0
+  powerUp: 0
+  activePowerUp: 0
+  powerTime: 8
+  originalpowerTime: 8
+  multiplier: 2
+  powerUpsGot: 0
+  GameManager: {fileID: 0}
   rb: {fileID: 8223153253746728264}
   groundCheck: {fileID: 262318520676796155}
   groundLayer:
