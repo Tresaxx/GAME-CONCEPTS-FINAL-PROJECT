@@ -3468,7 +3468,7 @@ MonoBehaviour:
   powerUp: {fileID: 828671966144609946, guid: 81ec9397662db584bb17f755c0fc9224, type: 3}
   player: {fileID: 1663454622}
   despawn: 0
-  respawnTime: 2
+  respawnTime: 30
   despawnTime: 40
 --- !u!4 &1744263320
 Transform:
