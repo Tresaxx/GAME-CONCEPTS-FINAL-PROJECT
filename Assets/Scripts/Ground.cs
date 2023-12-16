@@ -6,6 +6,7 @@ public class Ground : MonoBehaviour
 {
     public GameObject player;
     public Player playerScript;
+    public FakeElonMusk elon;
     public float groundHeight;
     public float groundRight;
     public float screenRight;
@@ -18,14 +19,15 @@ public class Ground : MonoBehaviour
         groundHeight = transform.position.y + (collider.size.y/2);
     }
 
-    private void FixedUpdate(){
+    private void Update(){
+
         screenRight = player.transform.position.x * 2;
         Vector2 pos = transform.position;
 
         
         groundRight = transform.position.x + collider.size.x;
         
-        if(groundRight < 0){
+        if(groundRight < elon.transform.position.x){
             Destroy(gameObject);
             return;
         }

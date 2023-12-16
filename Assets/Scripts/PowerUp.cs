@@ -6,6 +6,7 @@ public class PowerUp : MonoBehaviour
 {
     public GameObject powerUp;
     public GameObject player;
+    private Player playerScript;
     private GameObject p;
     public bool despawn = false;
     private float timer = 0.0f;
@@ -13,6 +14,10 @@ public class PowerUp : MonoBehaviour
     public float respawnTime = 10.0f;
     public float despawnTime = 5.0f;
     // Start is called before the first frame update
+    void Awake(){
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerScript = player.GetComponent<Player>();
+    }
 
     void Update()
     {
@@ -42,11 +47,11 @@ public class PowerUp : MonoBehaviour
 
     private void spawnPowerUp(){
         p = Instantiate(powerUp);
-        p.transform.position = new Vector2(Random.Range(player.transform.position.x + 3, player.transform.position.x + 7), Random.Range(0.0f, 1.5f));
+        p.transform.position = new Vector2(Random.Range(player.transform.position.x + 3 * playerScript.speed, player.transform.position.x + 7 * playerScript.speed), Random.Range(0.0f, 1.5f));
     }
 
     private void spawnPuzzle(){
         p = Instantiate(powerUp);
-        p.transform.position = new Vector2(Random.Range(player.transform.position.x + 3, player.transform.position.x + 7), Random.Range(0.0f, 1.0f));
+        p.transform.position = new Vector2(Random.Range(player.transform.position.x + 3 * playerScript.speed, player.transform.position.x + 7 * playerScript.speed), Random.Range(0.0f, 1.0f));
     }
 }

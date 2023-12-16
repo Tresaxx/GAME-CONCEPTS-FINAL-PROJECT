@@ -45,7 +45,7 @@ public class FakeElonMusk : MonoBehaviour
             direction = Vector3.right;
 
             // Move Fake Elon Musk towards the player using a constant speed
-            transform.position += direction * chaseSpeed * Time.deltaTime * playerScript.multiplier/1.5f;
+            transform.position += direction * chaseSpeed * Time.deltaTime * playerScript.multiplier/1.5f * (1 + playerScript.powerUpsGot/50);
 
             // Calculate distance between Fake Elon Musk and the player
             float distanceToPlayer = Vector2.Distance(transform.position, player.position);

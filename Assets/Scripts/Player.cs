@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
     public AudioSource powerDownSound;
     private Animator animate;
     public GameManager GameManager;
+    public FakeElonMusk elon;
 
     [SerializeField] public Rigidbody2D rb;
     [SerializeField] public Transform groundCheck;
@@ -151,10 +152,12 @@ public class Player : MonoBehaviour
             Destroy(collision.gameObject);
             powerUpsGot++;
             speed += multiplier - 2;
+            elon.timer = elon.waitTime - 0.5f;
             powerUpSound.Play(0);
         }
         if (collision.gameObject.tag == "PowerUp" && powerUp == true && activePowerUp == false){
             powerUpSound.Play(0);
+            elon.timer = elon.waitTime - 0.5f;
             activePowerUp = true;
             ScoreManager.instance.AddPoint(5000);
             Destroy(collision.gameObject);
