@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
     public bool puzzleActive = false;
     public float puzzleTimer = 0.0f;
     public float puzzleTime;
+    public AudioSource powerUpSound;
+    public AudioSource powerDownSound;
     private Animator animate;
     public GameManager GameManager;
 
@@ -92,6 +94,7 @@ public class Player : MonoBehaviour
                     speed = speed/currentMul;
                     activePowerUp = false;
                     powerUp = false;
+                    powerDownSound.Play(0);
                 }
             }
         } else {
@@ -139,8 +142,10 @@ public class Player : MonoBehaviour
             Destroy(collision.gameObject);
             powerUpsGot++;
             speed += multiplier - 2;
+            powerUpSound.Play(0);
         }
         if (collision.gameObject.tag == "PowerUp" && powerUp == true && activePowerUp == false){
+            powerUpSound.Play(0);
             activePowerUp = true;
             ScoreManager.instance.AddPoint(5000);
             Destroy(collision.gameObject);

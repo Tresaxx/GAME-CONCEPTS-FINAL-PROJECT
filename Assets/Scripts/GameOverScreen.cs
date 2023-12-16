@@ -6,9 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class GameOverScreen : MonoBehaviour
 {
+    public AudioSource deathSound;
     public Text pointsText;
     public bool gameOver = false;
     
+    void Awake(){
+        deathSound.Play(0);
+    }
+
     public void Setup(int score) {
         gameObject.SetActive(true);
         pointsText.text = score.ToString() + " POINTS";

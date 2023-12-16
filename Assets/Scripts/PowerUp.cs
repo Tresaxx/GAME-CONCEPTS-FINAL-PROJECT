@@ -42,6 +42,11 @@ public class PowerUp : MonoBehaviour
 
     private void spawnPowerUp(){
         p = Instantiate(powerUp);
-        p.transform.position = new Vector2(Random.Range(player.transform.position.x + 3, player.transform.position.x + 7), Random.Range(player.transform.position.y + 0.1f, 2.0f));
+        p.transform.position = new Vector2(Random.Range(player.transform.position.x + 3, player.transform.position.x + 7), Random.Range(0.0f, 1.5f));
+    }
+
+    private void spawnPuzzle(){
+        p = Instantiate(powerUp);
+        p.transform.position = new Vector2(Random.Range(player.transform.position.x + 3, player.transform.position.x + 7), Random.Range(0.0f, 1.0f));
     }
 }
