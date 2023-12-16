@@ -43,7 +43,7 @@ public class Ground : MonoBehaviour
         BoxCollider2D goCollider = go.GetComponent<BoxCollider2D>();
         Vector2 pos;
         pos.x = screenRight + 4.5f + playerScript.speed;
-        pos.y = Random.Range(-1, 1);
+        pos.y = Random.Range(0, 2);
         go.transform.position = pos;
     }
 }

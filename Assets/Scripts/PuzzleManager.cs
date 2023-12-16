@@ -7,11 +7,14 @@ public class PuzzleManager : MonoBehaviour
 {
     public GameObject puzzle;
     public Player player;
+    public FakeElonMusk elon;
     public Text timer;
     public Text question;
     public Text answer1;
     public Text answer2;
     public Text answer3;
+    public AudioSource powerUpSound;
+    public AudioSource powerDownSound;
     public float time;
     public bool puzzleCompletion = false;
     public int puzzlesCompleted = 0;
@@ -59,6 +62,8 @@ public class PuzzleManager : MonoBehaviour
             puzzle.SetActive(false);
         }
         if(puzzleCompletion){
+            elon.timer = elon.waitTime - 5;
+            powerUpSound.Play(0);
             puzzlesCompleted++;
             ScoreManager.instance.AddPoint(50000);
             puzzleCompletion = false;
@@ -78,6 +83,7 @@ public class PuzzleManager : MonoBehaviour
                 wrongAnswer2 = 2;
             }
         } else if(puzzleWrong){
+            powerDownSound.Play(0);
             puzzle.SetActive(false);
             puzzleWrong = false;
             player.puzzleTimer = player.puzzleTime;

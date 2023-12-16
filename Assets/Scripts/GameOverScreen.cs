@@ -9,12 +9,14 @@ public class GameOverScreen : MonoBehaviour
     public AudioSource deathSound;
     public Text pointsText;
     public bool gameOver = false;
+    public bool soundPlayed = false;
     
-    void Awake(){
-        deathSound.Play(0);
-    }
 
     public void Setup(int score) {
+        if(soundPlayed == false){
+            deathSound.Play(0);
+            soundPlayed = true;
+        }
         gameObject.SetActive(true);
         pointsText.text = score.ToString() + " POINTS";
         Time.timeScale = 0;
@@ -24,10 +26,12 @@ public class GameOverScreen : MonoBehaviour
     public void RestartButton() {
         SceneManager.LoadScene("Game");
         Time.timeScale = 1;
+        soundPlayed = false;
     }
 
     public void ExitButton() {
         SceneManager.LoadScene("MainMenu");
         Time.timeScale = 1;
+        soundPlayed = false;
     }
 }

@@ -31,7 +31,7 @@ public class PowerUp : MonoBehaviour
             despawn = false;
             despawnTimer -= despawnTime;
         }else if(despawnTimer > despawnTime && gameObject.tag != "Puzzle"){
-            spawnPowerUp();
+            spawnPuzzle();
             despawnTimer -= despawnTime;
         }
         if(despawnTimer > despawnTime && gameObject.tag == "Puzzle"){
