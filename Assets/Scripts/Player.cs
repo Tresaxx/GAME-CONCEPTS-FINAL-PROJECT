@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
     public bool puzzleActive = false;
     public float puzzleTimer = 0.0f;
     public float puzzleTime;
+    public float rollTime = 1.5f;
+    public float rollTimer = 0.0f;
     public AudioSource powerUpSound;
     public AudioSource powerDownSound;
     private Animator animate;
@@ -37,7 +39,12 @@ public class Player : MonoBehaviour
     void Update()
     {
         if(puzzleActive == false){
-            roll = Input.GetKeyDown(KeyCode.R);
+            rollTimer += Time.deltaTime;
+            if(rollTimer > rollTime){
+                roll = false;
+            } else{
+                roll = true;
+            }
             horizontal = Input.GetAxisRaw("Horizontal");
             if(animate != null){
                 if(roll){
@@ -110,9 +117,11 @@ public class Player : MonoBehaviour
     {
         rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
 
-        if (roll)
+        
+        if (Input.GetKeyDown(KeyCode.R) && roll == false)
         {
-            rb.velocity = new Vector2(speed * (transform.localScale.x * 10), rb.velocity.y);
+            rb.velocity = new Vector2(rb.velocity.x + speed * (transform.localScale.x * 10), rb.velocity.y);
+            rollTimer = 0.0f;
         }
 
     }
