@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class GameOverScreen : MonoBehaviour
 {
-    public AudioSource deathSound;
     public Text pointsText;
     public bool gameOver = false;
     public bool soundPlayed = false;
@@ -14,7 +13,7 @@ public class GameOverScreen : MonoBehaviour
 
     public void Setup(int score) {
         if(soundPlayed == false){
-            deathSound.Play(0);
+            AudioManager.Instance.PlaySFX("Death");
             soundPlayed = true;
         }
         gameObject.SetActive(true);
@@ -24,12 +23,14 @@ public class GameOverScreen : MonoBehaviour
     }
 
     public void RestartButton() {
+        AudioManager.Instance.PlaySFX("Button");
         SceneManager.LoadScene("Game");
         Time.timeScale = 1;
         soundPlayed = false;
     }
 
     public void ExitButton() {
+        AudioManager.Instance.PlaySFX("Button");
         SceneManager.LoadScene("MainMenu");
         Time.timeScale = 1;
         soundPlayed = false;

@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
+    public void Start(){
+        AudioManager.Instance.PlayMusic("Menu");
+    }
     public void StartButton() {
         SceneManager.LoadScene("Game");
     }
@@ -13,5 +16,9 @@ public class Menu : MonoBehaviour
     public void ExitButton() {
         Application.Quit();
         Debug.Log("Game closed");
+    }
+
+    public void ButtonNoise(){
+        AudioManager.Instance.PlaySFX("Button");
     }
 }

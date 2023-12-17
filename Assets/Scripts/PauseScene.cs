@@ -23,6 +23,7 @@ public class PauseScene : MonoBehaviour
 
     // Update is called once per frame
     public void ExitButton() {
+        AudioManager.Instance.PlaySFX("Button");
         SceneManager.LoadScene("MainMenu");
         Time.timeScale = 1;
     }

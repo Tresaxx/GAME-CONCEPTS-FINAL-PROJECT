@@ -22,8 +22,6 @@ public class Player : MonoBehaviour
     public float puzzleTime;
     public float rollTime = 1.5f;
     public float rollTimer = 0.0f;
-    public AudioSource powerUpSound;
-    public AudioSource powerDownSound;
     private Animator animate;
     public GameManager GameManager;
     public FakeElonMusk elon;
@@ -33,6 +31,7 @@ public class Player : MonoBehaviour
     [SerializeField] public LayerMask groundLayer;
 
     void Start(){
+        AudioManager.Instance.PlayMusic("Game");
         animate = GetComponent<Animator>();
         Physics2D.autoSimulation = true;
     }
@@ -102,7 +101,7 @@ public class Player : MonoBehaviour
                     speed = speed/currentMul;
                     activePowerUp = false;
                     powerUp = false;
-                    powerDownSound.Play(0);
+                    AudioManager.Instance.PlaySFX("PowerDown");
                 }
             }
         } else {
@@ -153,10 +152,10 @@ public class Player : MonoBehaviour
             powerUpsGot++;
             speed += multiplier - 2;
             elon.timer = elon.waitTime - 0.5f;
-            powerUpSound.Play(0);
+            AudioManager.Instance.PlaySFX("PowerUp");
         }
         if (collision.gameObject.tag == "PowerUp" && powerUp == true && activePowerUp == false){
-            powerUpSound.Play(0);
+            AudioManager.Instance.PlaySFX("PowerUp");
             elon.timer = elon.waitTime - 0.5f;
             activePowerUp = true;
             ScoreManager.instance.AddPoint(5000);
