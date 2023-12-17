@@ -10,8 +10,8 @@ public class AudioManager : MonoBehaviour
 
     public Sound[] musicSounds, sfxSounds;
     public AudioSource musicSource, sfxSource;
-    public float musicSave;
-    public float sfxSave;
+    public float musicSave = 1f;
+    public float sfxSave = 1f;
 
     public void Awake(){
         if(Instance == null){

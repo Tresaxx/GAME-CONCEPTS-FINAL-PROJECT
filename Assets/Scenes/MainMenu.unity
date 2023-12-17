@@ -2581,6 +2581,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 577745dad059ece48ab04826cd66facf, type: 3}
   musicSource: {fileID: 1910114006}
   sfxSource: {fileID: 1479390118}
+  musicSave: 1
+  sfxSave: 1
 --- !u!4 &592871076
 Transform:
   m_ObjectHideFlags: 0
